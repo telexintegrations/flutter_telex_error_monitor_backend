@@ -2,8 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routes.integration import integration_router
-from routes.submit_error import submit_error_router
+from api.routes.integration import integration_router
+from api.routes.submit_error import submit_error_router
 
 version = 'v1'
 

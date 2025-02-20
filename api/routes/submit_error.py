@@ -1,7 +1,7 @@
 import httpx
 from fastapi import APIRouter
 
-from schema.error_submission import ErrorSubmission
+from api.schema.error_submission import ErrorSubmission
 
 submit_error_router = APIRouter()
 
