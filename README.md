@@ -33,12 +33,11 @@ This backend service receives error data from Flutter applications (using the `f
 
 Errors are formatted in a consistent, readable structure:
 ```
-Error: {error details}
-Location: {where the error occurred}
-
+❌ 𝗘𝗿𝗿𝗼𝗿: {error_log.error}
+📍 𝗟𝗼𝗰𝗮𝘁𝗶𝗼𝗻: {clean_location}
 ```
 
-## Setup
+## Backend Setup
 
 1. Clone this repository
 2. Create a virtual environment (recommended):
@@ -60,29 +59,85 @@ To install all dependencies:
 pip install -r requirements.txt
 ```
 
-## Deployment
+## Flutter Package Installation
 
-This service can be deployed to any platform supporting Python:
-- Render
-- Railway
-- Heroku
-- AWS
-- Google Cloud
+### Step 1: Set up Telex
+
+Before installing the package, you need to set up a Telex channel:
+
+1. Create an account with [telex.im](https://telex.im)
+2. Click on the first tab with your initials to create an organization
+3. Go to the "Channels" tab and add a channel
+4. In your channel, click the arrow-down button beside your channel name and click on "Webhook Configuration"
+5. Copy your webhook URL - you'll need this for initialization
+
+### Step 2: Add the package to your Flutter project
+
+Add the package to your `pubspec.yaml`:
+
+```bash
+flutter pub add flutter_telex_error_monitor
+```
+
+### Step 3: Initialize the error monitor
+
+In your main.dart:
+
+```dart
+import 'package:flutter_telex_error_monitor/flutter_telex_error_monitor.dart';
+
+void main() {
+  // Initialize the error monitor before runApp
+  FlutterTelexErrorMonitor.init(
+    telexChannelWebhookUrl: "YOUR_TELEX_WEBHOOK_URL", // From Step 1
+    appName: "YOUR_FLUTTER_APP_NAME",  // Optional
+  );
+  
+  runApp(MyApp());
+}
+```
+
+## Activating the Telex Integration
+
+To use advanced features with error formatting settings:
+
+1. Log in to your Telex organization
+2. Navigate to the "Apps" tab in your organization sidebar
+3. Search for "Flutter Telex Error Monitor" in the integrations marketplace
+4. Click "Install" to add it to your organization
+5. Navigate to the channel where you want to use error tracking
+6. Click the channel settings (gear icon)
+7. Select "Apps & Integrations"
+8. Find "Flutter Telex Error Monitor" and toggle it on for this channel
+
+### Configuring Integration Settings
+
+Once activated, you can configure the integration settings:
+
+1. Click on the "Flutter Telex Error Monitor" integration in your channel's integrations list
+2. You'll see the following configuration options:
+   - **Error Format Template**: Customize how errors appear in your channel
+   - **Show Error Location**: Toggle whether to display file and line information
+
+These settings allow you to:
+- Adapt error messages to your team's preferences
+- Control the level of detail shown in error reports
+- Make error reporting consistent with your organization's standards
 
 ## Integration with Flutter
 
-This backend is designed to work with the `flutter_telex_error_monitor` package. When properly configured, Flutter applications will automatically send errors to this backend, which then forwards them to Telex.
+This backend is designed to work with the `flutter_telex_error_monitor` package. When properly configured, Flutter applications will automatically send runtime errors to this backend, which then forwards them to Telex.
 
-## Security Considerations
 
-- This service accepts webhook URLs from clients
-- Implement appropriate validation in production environments
-- Consider adding authentication for secure deployments
-- Use HTTPS for all communications
+## Flow Diagram
 
-## Requirements
-
-- Python 3.7+
-- FastAPI
-- httpx
-- Pydantic
+```
+Flutter App                 Backend Service               Telex
+    |                             |                         |
+    |-- Error occurs              |                         |
+    |-- Captures details          |                         |
+    |------- Send error --------->|                         |
+    |                             |-- Formats error         |
+    |                             |------- Forward -------->|
+    |                             |                         |-- Displays in channel
+```

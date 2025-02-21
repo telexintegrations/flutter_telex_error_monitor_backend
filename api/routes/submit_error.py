@@ -11,8 +11,8 @@ async def submit_error(error_log: ErrorSubmission):
 
     clean_location = error_log.location.replace("<fn>", "").replace("</fn>", "")
 
-    formatted_error = f"""Error: {error_log.error}
-    Location: {clean_location}"""
+    formatted_error = f"""❌ 𝗘𝗿𝗿𝗼𝗿: {error_log.error}
+    📍 𝗟𝗼𝗰𝗮𝘁𝗶𝗼𝗻: {clean_location}"""
 
     payload = {
         "event_name": "Flutter Telex Error Monitor",
