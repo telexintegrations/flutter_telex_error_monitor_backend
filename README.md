@@ -14,52 +14,10 @@ This backend service receives error data from Flutter applications (using the `f
 - Supports custom application names for error source identification
 - Provides consistent error reporting across multiple applications
 
-## API Reference
+## Error Example
+![](screenshot/telex_channel_screenshot.png)
 
-### POST `/submit-error`
-
-**Purpose:** Receive error data from Flutter applications and forward to Telex
-
-**Request Parameters:**
-- `app_name`: Name of the Flutter application (used for identification in reports)
-- `telex_channel_webhook_Url`: The specific Telex channel webhook URL
-- `error`: The error message or exception details
-- `location`: Where the error occurred (file, line number, method)
-
-**Response:**
-- Status code `200` with `{"status": "success"}` on successful processing
-
-## Error Format
-
-Errors are formatted in a consistent, readable structure:
-```
-❌ 𝗘𝗿𝗿𝗼𝗿: {error_log.error}
-📍 𝗟𝗼𝗰𝗮𝘁𝗶𝗼𝗻: {clean_location}
-```
-
-## Backend Setup
-
-1. Clone this repository
-2. Create a virtual environment (recommended):
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-3. Install dependencies from requirements.txt:
-   ```
-   pip install -r requirements.txt
-   ```
-4. Run the server:
-   ```
-   uvicorn main:app --reload
-   ```
-
-To install all dependencies:
-```
-pip install -r requirements.txt
-```
-
-## Flutter Package Installation
+## Telex Integration in Flutter
 
 ### Step 1: Set up Telex
 
@@ -97,6 +55,68 @@ void main() {
 }
 ```
 
+## Backend Setup
+
+1. Clone this repository:
+   ```bash
+   https://github.com/telexintegrations/flutter_telex_error_monitor_backend.git
+   cd flutter_telex_error_monitor_backend
+   ```
+
+2. Create a virtual environment (recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Run the server:
+   ```bash
+   uvicorn main:app --reload
+   ```
+
+## Project Structure
+
+```
+test_app/
+├── .github/
+│   └── workflows/
+│       └── keep_api_alive.yml    # GitHub Actions workflow
+├── .venv/                        # Virtual environment
+├── api/
+│   ├── routes/
+│   │   ├── integration.py        # Telex integration endpoints
+│   │   └── submit_error.py       # Error submission handling
+│   └── schema/
+│       └── error_submission.py   # Error payload schema
+├── screenshot/
+│   └── telex_channel_screenshot.png
+├── test/
+│   └── main.py                   # Test files
+├── README.md                     # Documentation
+└── requirements.txt              # Dependencies
+```
+
+## API Reference
+
+### POST `/submit-error`
+
+**Purpose:** Receives error data from Flutter applications and forwards it to Telex.
+
+**Response**
+- Status Code: 200
+- Body: `{"status": "success"}` on successful processing
+
+### Error Format
+```
+❌ 𝗘𝗿𝗿𝗼𝗿: {error_log.error}
+📍 𝗟𝗼𝗰𝗮𝘁𝗶𝗼𝗻: {clean_location}
+```
+
 ## Activating the Telex Integration
 
 To use advanced features with error formatting settings:
@@ -124,11 +144,6 @@ These settings allow you to:
 - Control the level of detail shown in error reports
 - Make error reporting consistent with your organization's standards
 
-## Integration with Flutter
-
-This backend is designed to work with the `flutter_telex_error_monitor` package. When properly configured, Flutter applications will automatically send runtime errors to this backend, which then forwards them to Telex.
-
-
 ## Flow Diagram
 
 ```
@@ -141,3 +156,11 @@ Flutter App                 Backend Service               Telex
     |                             |------- Forward -------->|
     |                             |                         |-- Displays in channel
 ```
+
+## Contributing
+
+Contributions are welcome! If you'd like to improve this project, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.
