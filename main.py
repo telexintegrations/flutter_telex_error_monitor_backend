@@ -8,7 +8,7 @@ from api.routes.submit_error import submit_error_router
 version = 'v1'
 
 app = FastAPI(
-   title="Flutter Telex Error Monitor",
+   title="Flutter Error Monitor",
    description="A REST API that captures Flutter application errors and formats them for display in Telex channels",
    version=version,
 )
