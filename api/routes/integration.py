@@ -13,10 +13,10 @@ def get_integration_json(request: Request):
                 "updated_at": "2025-02-17"
             },
             "descriptions": {
-                "app_name": "Flutter Telex Error Monitor",
+                "app_name": "Flutter Error Monitor",
                 "app_description": "A Flutter error tracking integration that automatically captures and reports application errors in real-time to Telex channels.",
                 "app_logo": "https://cdn.prod.website-files.com/6270e8022b05abb840d27d6f/6308d1ab615e60c9047c9d06_AppDev_Flutter-tools.png",
-                "app_url": f"{base_url}/api/integration.json",
+                "app_url": f"{base_url}",
                 "background_color": "#fff"
             },
             "is_active": True,
