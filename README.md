@@ -141,7 +141,38 @@ test_app/
 
 ## API Reference
 
-### POST `/submit-error`
+- 📌 Endpoint to send errors to THE Channel
+
+   ```commandline
+   POST https://fastapi-flutter-error-checker.onrender.com/api/v1/submit-error
+   ```
+
+- 📥 Request Body (JSON Format)
+
+   ```commandline
+   {
+       "app_name": "My Test Flutter App",
+       "telex_channel_webhook_Url": "YOUR_WEBHOOK_CHANNEL_URL",
+       "error": "TypeError: Cannot read property 'length' of ",
+       "location": "packages/myapp/lib/screens/home_screen.dart:42:10"
+   }
+   
+   ```
+
+- ✅ Expected Response
+
+   ```commandline
+   {
+       "status": "success"
+   }
+   ```
+
+- 📌 Error Format Displayed in Telex Channel
+
+   ```commandline
+   ❌ 𝗘𝗿𝗿𝗼𝗿: TypeError: Cannot read property 'length' of 
+   📍 𝗟𝗼𝗰𝗮𝘁𝗶𝗼𝗻: packages/myapp/lib/screens/home_screen.dart:42:10
+   ```
 
 **Purpose:** Receives error data from Flutter applications and forwards it to Telex.
 
