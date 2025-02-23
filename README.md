@@ -55,6 +55,44 @@ void main() {
 }
 ```
 
+### Step 4: Android Configuration
+- For Android apps, update your AndroidManifest.xml file located at android/app/src/main/AndroidManifest.xml.
+Add the following inside the <application> tag:
+
+```
+<application
+    android:enableOnBackInvokedCallback="true"
+    ... >
+</application>
+```
+
+## Test App Setup
+For easier testing, i've provided a sample Flutter application that generates various types of errors:
+
+Clone the test app repository:
+
+``` bash
+git clone https://github.com/EmmyAnieDev/flutter_apm-test_app.git
+cd flutter_apm-test_app
+flutter pub get
+```
+
+### Set up your Telex chanel webhook url configuration in main.dart:
+
+```
+dartCopyFlutterTelexErrorMonitor.init(
+    appName: 'YOUR_APP_NAME',
+    telexChannelWebhookUrl: 'YOUR_CHANNEL_WEBHOOK_URL'
+);
+```
+
+```bash
+Run the test app:
+flutter run
+```
+
+- When you click on the counter button in the test app, different errors will be sent to your Telex channel based on the counter value. Each error will appear in your connected Telex channel with the error message and location details.
+
 ## Backend Setup
 
 1. Clone this repository:
